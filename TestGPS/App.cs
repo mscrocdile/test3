@@ -6,7 +6,7 @@ namespace TestGPS
 	{
 		public static Page GetMainPage()
 		{	
-			return new GpsPage();
+			return new MainPage();
 		}
 	}
 }

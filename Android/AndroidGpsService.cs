@@ -50,15 +50,15 @@ namespace TestGPS.Android
 		}
 
 
-		public void SetLocation()
-		{
-			var currentLocationString = _currentLocation == null 
-											? "Can't determine the current address." 
-											: string.Format("{0} - {1}", _currentLocation.Latitude, _currentLocation.Longitude);
-
-			MessagingCenter.Send<ILocationService, string> (this, Messaging.LocationUpdated, currentLocationString);
-
-		}
+        public void SetLocation()
+        {
+            var loc = new UnivLocation();
+            if (loc != null) { 
+                loc.Lat = _currentLocation.Latitude;
+                loc.Lon = _currentLocation.Longitude;
+            }
+            MessagingCenter.Send<ILocationService, UnivLocation> (this, Messaging.LocationUpdated, loc);
+        }
 			
 		// ILocationListener methods
 		public void OnLocationChanged(Location location)
