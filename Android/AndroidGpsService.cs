@@ -34,7 +34,7 @@ namespace TestGPS.Android
 				_locationProvider = _locationManager.GetBestProvider(criteriaForLocationService, true);
 				if (!string.IsNullOrEmpty(_locationProvider) && _locationManager.IsProviderEnabled(_locationProvider))
 				{
-					_locationManager.RequestLocationUpdates(_locationProvider, 2000, 1, this);
+					_locationManager.RequestLocationUpdates(_locationProvider, 5, 1, this);
 				}
 				else
 				{
@@ -52,7 +52,7 @@ namespace TestGPS.Android
 
         public void SetLocation()
         {
-            var loc = new UnivLocation();
+            var loc = new UnivLocation { Datum = DateTime.Now };
             if (loc != null) { 
                 loc.Lat = _currentLocation.Latitude;
                 loc.Lon = _currentLocation.Longitude;

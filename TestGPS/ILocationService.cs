@@ -6,7 +6,12 @@ namespace TestGPS
     {
         public double? Lat { get; set; }
         public double? Lon { get; set; }
-        public string Name { get; set; }
+        public DateTime Datum { get; set; }
+        public string Name { get
+            {
+                return Datum.ToString();
+            }
+        }
 
         public string GetLocation()
         {
