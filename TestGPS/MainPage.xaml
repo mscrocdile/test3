@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TestGPS.MainPage">
   <StackLayout >
-  <Button Text="TEST" Clicked="btnKlik"></Button> 
-  <ListView x:Name="lv" RowHeight="80" VerticalOptions = "LayoutOptions.FillAndExpand">
+  <Button Text="Upload" Clicked="btnKlik"></Button>
+  <Button Text="Clear list" Clicked="btnKlik2"></Button>
+    <ListView x:Name="lv" RowHeight="80" VerticalOptions = "LayoutOptions.FillAndExpand">
     <ListView.ItemTemplate>
       <DataTemplate>
         <ViewCell>

@@ -47,6 +47,14 @@ namespace TestGPS
         {
             _gpsrecording = false;
              await SaveTodoItemAsync(_data.ToArray());
+            _gpsrecording = true;
+        }
+
+        private void btnKlik2(object sender, EventArgs e)
+        {
+            _gpsrecording = false;
+            _data.Clear();
+            _gpsrecording = true;
         }
 
         public async Task<string> SaveTodoItemAsync(UnivLocation[] items)
