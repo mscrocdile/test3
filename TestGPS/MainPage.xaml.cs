@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 
 namespace TestGPS
@@ -13,6 +15,7 @@ namespace TestGPS
     {
         private ILocationService _locationProvider;
         private ObservableCollection<UnivLocation> _data;
+        private Boolean _gpsrecording = true;
 
         public MainPage()
         {
@@ -20,6 +23,7 @@ namespace TestGPS
            
             _locationProvider = DependencyService.Get<ILocationService>();
             _data = new ObservableCollection<UnivLocation>();
+            //_data.Add(new UnivLocation { Datum = DateTime.Now, Lat = 0, Lon = 0}); //DEBUG EMPTY ITEM
             lv.ItemsSource = _data;
 
             MessagingCenter.Subscribe<ILocationService, UnivLocation>(this, Messaging.LocationUpdated, HandleLocationUpdate);
@@ -33,14 +37,31 @@ namespace TestGPS
 
         private void HandleLocationUpdate(ILocationService service, UnivLocation newLocation)
         {
-            Device.BeginInvokeOnMainThread(() =>
-                 _data.Insert(0, newLocation)
-            );
+            if (_gpsrecording)
+                Device.BeginInvokeOnMainThread(() =>
+                     _data.Insert(0, newLocation)
+                );
         }
 
-        private void btnKlik(object sender, EventArgs e)
+        private async void btnKlik(object sender, EventArgs e)
         {
-           // MessagingCenter.Send<ILocationService, UnivLocation>(new FooLoc(), Messaging.LocationUpdated, new UnivLocation { Lat=5.3,Lon=5.3, Name = "Just test" });
+            _gpsrecording = false;
+             await SaveTodoItemAsync(_data.ToArray());
+        }
+
+        public async Task<string> SaveTodoItemAsync(UnivLocation[] items)
+        {
+            using (var client = new HttpClient())
+            {
+                var RestUrl = ""; //nahradit s url serveru 
+                var uri = new Uri(RestUrl);
+                var json = JsonConvert.SerializeObject(items);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(uri, content);
+                var status = response.StatusCode;
+                var respCont = response.Content.ReadAsStringAsync().Result;
+                return respCont;
+            }
         }
     }
 }

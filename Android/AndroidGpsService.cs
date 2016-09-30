@@ -52,7 +52,7 @@ namespace TestGPS.Android
 
         public void SetLocation()
         {
-            var loc = new UnivLocation { Datum = DateTime.Now };
+            var loc = new UnivLocation { MobileID = "telefen", Datum = DateTime.Now, Info = "" };
             if (loc != null) { 
                 loc.Lat = _currentLocation.Latitude;
                 loc.Lon = _currentLocation.Longitude;

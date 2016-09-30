@@ -4,18 +4,16 @@ namespace TestGPS
 {
     public class UnivLocation
     {
-        public double? Lat { get; set; }
-        public double? Lon { get; set; }
+        public int ID { get; set; }
+        public string MobileID { get; set; }
         public DateTime Datum { get; set; }
-        public string Name { get
-            {
-                return Datum.ToString();
-            }
-        }
+        public double Lat { get; set; }
+        public double Lon { get; set; }
+        public string Info { get; set; }
 
         public string GetLocation()
         {
-            return (Lat == null) ? "Cannot tentononc" : string.Format("{0}, {1}", Lat, Lon);
+            return string.Format("{0}, {1}", Lat, Lon);
         }
     }
 
