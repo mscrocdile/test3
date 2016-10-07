@@ -23,7 +23,7 @@ namespace TestGPS
            
             _locationProvider = DependencyService.Get<ILocationService>();
             _data = new ObservableCollection<UnivLocation>();
-            //_data.Add(new UnivLocation { Datum = DateTime.Now, Lat = 0, Lon = 0}); //DEBUG EMPTY ITEM
+           // _data.Add(new UnivLocation { Datum = DateTime.Now, Lat = 0, Lon = 0, Info="debug"}); //DEBUG EMPTY ITEM
             lv.ItemsSource = _data;
 
             MessagingCenter.Subscribe<ILocationService, UnivLocation>(this, Messaging.LocationUpdated, HandleLocationUpdate);
@@ -37,6 +37,7 @@ namespace TestGPS
 
         private void HandleLocationUpdate(ILocationService service, UnivLocation newLocation)
         {
+            newLocation.Info = txt.Text;    
             if (_gpsrecording)
                 Device.BeginInvokeOnMainThread(() =>
                      _data.Insert(0, newLocation)
